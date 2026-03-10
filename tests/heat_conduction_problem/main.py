@@ -1,11 +1,13 @@
 import numpy as np
-from mesh_io import ReadMesh
+from supporting_files.mesh_io import ReadMesh
 from elements.heat_conduction_element import HeatConductionElement
 from geometries.system_matrix_builder import SystemMatrixBuilder
-from vtu_output import VtuOutput
+from supporting_files.vtu_output import VtuOutput
+import os
 
 def main():
-    mesh = ReadMesh("example_mesh_1.mdpa")
+    os.makedirs("vtu_files", exist_ok=True)
+    mesh = ReadMesh("mdpa_files/example_mesh_1.mdpa")
 
     list_of_elements: 'list[HeatConductionElement]' = []
 
@@ -45,7 +47,7 @@ def main():
 
     system_matrix_builder.UpdateSolution(du, mesh.nodes_list, ["temperature"])
 
-    VtuOutput("example_mesh_1.mdpa", mesh, ["temperature"], "temperature", "output")
+    VtuOutput("mdpa_files/example_mesh_1.mdpa", mesh, ["temperature"], "temperature", "vtu_files/heat_conduction_output")
 
 
 if __name__ == "__main__":
