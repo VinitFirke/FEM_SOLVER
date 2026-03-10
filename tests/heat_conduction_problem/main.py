@@ -4,6 +4,7 @@ from elements.heat_conduction_element import HeatConductionElement
 from geometries.system_matrix_builder import SystemMatrixBuilder
 from supporting_files.vtu_output import VtuOutput
 import os
+from geometries.geometry import GeometryType
 
 def main():
     os.makedirs("vtu_files", exist_ok=True)
@@ -11,7 +12,12 @@ def main():
 
     list_of_elements: 'list[HeatConductionElement]' = []
 
+    #for geometry in mesh.geometries_list:
+    #    heat_conduction_element = HeatConductionElement(geometry.geometry_id, geometry, {})
+    #    list_of_elements.append(heat_conduction_element)
     for geometry in mesh.geometries_list:
+        if geometry.GetGeometryType() != GeometryType.Domain_integral:
+            continue
         heat_conduction_element = HeatConductionElement(geometry.geometry_id, geometry, {})
         list_of_elements.append(heat_conduction_element)
     

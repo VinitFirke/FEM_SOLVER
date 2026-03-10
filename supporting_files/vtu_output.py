@@ -1,6 +1,6 @@
 import KratosMultiphysics as Kratos
 import numpy as np
-from mesh_io import Mesh
+from supporting_files.mesh_io import Mesh
 
 def VtuOutput(file_name: str, mesh: Mesh, dofs_list: 'list[str]', output_dof_name: str, output_file_name: str):
     model = Kratos.Model()

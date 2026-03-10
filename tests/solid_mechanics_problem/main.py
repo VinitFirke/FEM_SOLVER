@@ -1,15 +1,16 @@
 import numpy as np
-from mesh_io import ReadMesh
+from supporting_files.mesh_io import ReadMesh
 from geometries.geometry import GeometryType
 from elements.element import Element
 from elements.solid_element_2d import SolidElement2D
 from elements.force_nbc_2d import ForceNBC2D
 from geometries.system_matrix_builder import SystemMatrixBuilder
-from vtu_output import VtuOutput
-
+from supporting_files.vtu_output import VtuOutput
+import os
 def main():
     #mesh = ReadMesh("example_mesh_1.mdpa") #original
-    mesh = ReadMesh("Task1_QuadrilateralMeshType_2D.mdpa")
+    os.makedirs("vtu_files", exist_ok=True)
+    mesh = ReadMesh("mdpa_files/Task1_QuadrilateralMeshType_2D.mdpa")
 
     element_properties = {
         "poisson_ratio": 0.29,
@@ -52,7 +53,7 @@ def main():
 
     system_matrix_builder.UpdateSolution(du, mesh.nodes_list, ["displacement_x", "displacement_y"])
 
-    VtuOutput("Task1_QuadrilateralMeshType_2D.mdpa", mesh, ["displacement_x", "displacement_y"], "displacement", "output_pwh") #this one
+    VtuOutput("mdpa_files/Task1_QuadrilateralMeshType_2D.mdpa", mesh, ["displacement_x", "displacement_y"], "displacement", "vtu_files/solid_mechanics_output") #this one
 
 if __name__ == "__main__":
     main()
